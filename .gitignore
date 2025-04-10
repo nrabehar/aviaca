@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# prisma
+# Prisma Generator
+prisma/generated
+# Prisma Client
+prisma/client
+# Prisma Migrations
+prisma/migrations/
+# Prisma Data
+prisma/data/
