@@ -1,5 +1,6 @@
 import { CardWrapper } from '@/components/auth/card-wrapper';
 import { LoginForm } from '@/components/auth/login-form';
+import { Suspense } from 'react';
 
 const LoginPage = () => {
 	return (
@@ -13,7 +14,9 @@ const LoginPage = () => {
 			backButtonHref='/register'
 			socialButtonsLabel='Login with'
 		>
-			<LoginForm />
+			<Suspense>
+				<LoginForm />
+			</Suspense>
 		</CardWrapper>
 	);
 };
