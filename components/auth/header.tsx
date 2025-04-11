@@ -20,7 +20,7 @@ export const Header = ({ label }: HeaderProps) => {
 					Aviaca
 				</h1>
 			</div>
-			<p className='text-2xl font-semibold text-muted-foreground'>{label}</p>
+			<p className='text-2xl font-semibold text-muted-foreground text-center'>{label}</p>
 		</div>
 	);
 };

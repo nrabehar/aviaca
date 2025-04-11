@@ -1,10 +1,10 @@
 'use client';
 
 import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';

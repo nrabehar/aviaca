@@ -1,10 +1,8 @@
 'use client';
 
-import { login } from '@/actions/auth.action';
-import { LoginSchema, LoginSchemaType } from '@/schemas/auth.schema';
+import { reset } from '@/actions/auth.action';
+import { ResetSchema, ResetSchemaType } from '@/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormHighlight } from '../form-highlight';
@@ -19,30 +17,23 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 
-export const LoginForm = () => {
-	const searchParams = useSearchParams();
-	const urlError =
-		searchParams.get('error') === 'OAuthAccountNotLinked'
-			? 'Email already linked to another account'
-			: '';
-
+export const ResetForm = () => {
 	const [isPending, setTransition] = useTransition();
 	const [error, setError] = useState<string | undefined>('');
 	const [success, setSuccess] = useState<string | undefined>('');
 
-	const form = useForm<LoginSchemaType>({
-		resolver: zodResolver(LoginSchema),
+	const form = useForm<ResetSchemaType>({
+		resolver: zodResolver(ResetSchema),
 		defaultValues: {
-			identifier: '',
-			password: '',
+			email: '',
 		},
 	});
 
-	const onSubmit = (data: LoginSchemaType) => {
+	const onSubmit = (data: ResetSchemaType) => {
 		setError('');
 		setSuccess('');
 		setTransition(() => {
-			login(data)
+			reset(data)
 				.then((res) => {
 					if (res?.success) {
 						setSuccess(res.message);
@@ -53,9 +44,6 @@ export const LoginForm = () => {
 				.catch((err) => {
 					setError('Something went wrong');
 					console.error(err);
-				})
-				.finally(() => {
-					console.log('Login process finished');
 				});
 		});
 	};
@@ -63,19 +51,19 @@ export const LoginForm = () => {
 	return (
 		<Form {...form}>
 			<form className='w-full space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
-				<FormHighlight type='error' message={error || urlError} />
+				<FormHighlight type='error' message={error} />
 				<FormHighlight type='success' message={success} />
 				<FormHighlight type='info' message='' />
 				<FormField
-					name='identifier'
+					name='email'
 					control={form.control}
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Username or Email address</FormLabel>
+							<FormLabel>Email address</FormLabel>
 							<FormControl>
 								<Input
-									placeholder='Enter your email or username'
-									type='text'
+									placeholder='john.doe@example.com'
+									type='email'
 									disabled={isPending}
 									{...field}
 								/>
@@ -84,33 +72,12 @@ export const LoginForm = () => {
 						</FormItem>
 					)}
 				/>
-				<FormField
-					name='password'
-					control={form.control}
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Password</FormLabel>
-							<FormControl>
-								<Input
-									placeholder='********'
-									type='password'
-									disabled={isPending}
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button size={'sm'} variant={'link'} asChild className='px-0 font-normal'>
-					<Link href='/auth/reset'>Forgot password?</Link>
-				</Button>
 				<Button
 					type='submit'
 					className='w-full cursor-pointer'
 					disabled={isPending}
 				>
-					Login
+					Send reset email
 				</Button>
 			</form>
 		</Form>

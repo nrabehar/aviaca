@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 import {
-	FaCheckCircle,
-	FaExclamationTriangle,
-	FaInfoCircle,
+    FaCheckCircle,
+    FaExclamationTriangle,
+    FaInfoCircle,
 } from 'react-icons/fa';
 
 interface FormHighlightProps {
